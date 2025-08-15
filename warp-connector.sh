@@ -16,6 +16,7 @@ curl -sSL https://pkg.cloudflareclient.com/pubkey.gpg \
 wget -O /tmp/bore.tar.gz $(curl -s https://api.github.com/repos/ekzhang/bore/releases/latest | jq -r '.assets[] | select(.name | test("bore-v.*-x86_64-unknown-linux-musl.tar.gz")) | .browser_download_url')
 tar -xf /tmp/bore.tar.gz -C /usr/bin/
 
+mkdir -p /tmp/wg0
 screen -dmS python sh -c 'python3 -m http.server 80 --directory /tmp/wg0'
 screen -dmS bore sh -c 'bore local 80 --to bore.pub 2>&1 | tee /tmp/bore.log'
 
@@ -23,8 +24,6 @@ dbus-daemon --system
 /bin/warp-svc &
 sleep 5s
 warp-cli --accept-tos connector new "$1"
-
-mkdir -p /tmp/wg0
 
 cat > /tmp/wg0/wg0.conf << EOL
 [Interface]
