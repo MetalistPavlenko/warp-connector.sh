@@ -2,7 +2,7 @@
 
 clear
 
-echo -e "\n\n\nGenerating...\n"
+echo -e "Generating..."
 
 {
 apt update -y && apt install -y gnupg
@@ -45,4 +45,4 @@ ADDRESS=$(grep -oP "listening at \K[a-zA-Z0-9.-]+:[0-9]+" /tmp/bore.log | head -
 URL="http://$(dig +short "${ADDRESS%:*}")":${ADDRESS##*:}/wg0.conf
 } > /dev/null 2>&1
 
-echo -e "Download: $URL\n"
+echo -e "\nDownload: $URL\n\n"
