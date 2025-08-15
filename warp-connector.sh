@@ -2,7 +2,6 @@
 
 echo -e "\nGenerating..."
 
-{
 curl -sSL https://pkg.cloudflareclient.com/pubkey.gpg \
   | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg \
   && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" \
@@ -38,6 +37,5 @@ sleep 5s
 
 ADDRESS=$(grep -oP "listening at \K[a-zA-Z0-9.-]+:[0-9]+" /tmp/bore.log | head -n 1)
 URL="http://$(dig +short "${ADDRESS%:*}")":${ADDRESS##*:}/wg0.conf
-} > /dev/null 2>&1
 
 echo -e "\n$URL\n"
