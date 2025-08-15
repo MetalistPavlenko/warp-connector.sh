@@ -32,10 +32,8 @@ Address = $(jq -r .interface.v4 < /var/lib/cloudflare-warp/conf.json)/12,$(jq -r
 [Peer]
 PublicKey = $(jq -r .public_key < /var/lib/cloudflare-warp/conf.json)
 AllowedIPs = 100.96.0.0/12
-Endpoint = $(jq -r .endpoints[0].v4 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[0].v6 < /var/lib/cloudflare-warp/conf.json)
-# Endpoint = $(jq -r .endpoints[1].v4 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[1].v6 < /var/lib/cloudflare-warp/conf.json)
-# Endpoint = $(jq -r .endpoints[2].v4 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[2].v6 < /var/lib/cloudflare-warp/conf.json)
-# Endpoint = $(jq -r .endpoints[3].v4 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[3].v6 < /var/lib/cloudflare-warp/conf.json)
+Endpoint = $(jq -r .endpoints[0].v4 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[1].v4 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[2].v4 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[3].v4 < /var/lib/cloudflare-warp/conf.json)
+# Endpoint = $(jq -r .endpoints[0].v6 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[1].v6 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[2].v6 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[3].v6 < /var/lib/cloudflare-warp/conf.json)
 PersistentKeepalive = 25
 EOL
 
