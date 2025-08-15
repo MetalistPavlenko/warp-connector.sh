@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "\nGenerating...\n"
+echo -e "\nGenerating..."
 
 {
 curl -sSL https://pkg.cloudflareclient.com/pubkey.gpg \
@@ -34,9 +34,10 @@ EOL
 
 screen -dmS python sh -c 'python3 -m http.server 80 --directory /tmp/wg0'
 screen -dmS bore sh -c 'bore local 80 --to bore.pub 2>&1 | tee /tmp/bore.log'
+sleep 5s
 
 ADDRESS=$(grep -oP "listening at \K[a-zA-Z0-9.-]+:[0-9]+" /tmp/bore.log | head -n 1)
 URL="http://$(dig +short "${ADDRESS%:*}")":${ADDRESS##*:}/wg0.conf
 } > /dev/null 2>&1
 
-echo "$URL"
+echo -e "\n$URL\n"
