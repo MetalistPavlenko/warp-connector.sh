@@ -1,5 +1,5 @@
-# Generate Cloudflare WARP Config for WireGuard
-This bash script generates a WARP Connector tunnel for WireGuard.
+# Generate CloudFlare Zero Trust Tunnel Config for WireGuard
+This bash script generates a CloudFlare Zero Trust Tunnel for WireGuard.
 
 1. Go to: https://terminator.aeza.net
 2. Select: **`debian`**
