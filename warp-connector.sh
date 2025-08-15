@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "\n\nGenerating...\n\n"
+echo -e "\n\n\nGenerating...\n"
 
 {
 apt update -y && apt install -y gnupg
@@ -31,12 +31,16 @@ Address = $(jq -r .interface.v4 < /var/lib/cloudflare-warp/conf.json)/12,$(jq -r
 
 [Peer]
 PublicKey = $(jq -r .public_key < /var/lib/cloudflare-warp/conf.json)
-AllowedIPs = 0.0.0.0/0,::/0
-Endpoint = $(jq -r .endpoints[0].v4 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[1].v4 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[2].v4 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[3].v4 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[0].v6 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[1].v6 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[2].v6 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[3].v6 < /var/lib/cloudflare-warp/conf.json)
+AllowedIPs = 100.96.0.0/12
+Endpoint = $(jq -r .endpoints[0].v4 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[0].v6 < /var/lib/cloudflare-warp/conf.json)
+# Endpoint = $(jq -r .endpoints[1].v4 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[1].v6 < /var/lib/cloudflare-warp/conf.json)
+# Endpoint = $(jq -r .endpoints[2].v4 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[2].v6 < /var/lib/cloudflare-warp/conf.json)
+# Endpoint = $(jq -r .endpoints[3].v4 < /var/lib/cloudflare-warp/conf.json),$(jq -r .endpoints[3].v6 < /var/lib/cloudflare-warp/conf.json)
+PersistentKeepalive = 25
 EOL
 
 ADDRESS=$(grep -oP "listening at \K[a-zA-Z0-9.-]+:[0-9]+" /tmp/bore.log | head -n 1)
 URL="http://$(dig +short "${ADDRESS%:*}")":${ADDRESS##*:}/wg0.conf
 } > /dev/null 2>&1
 
-echo -e "\nDownload: $URL\n"
+echo -e "Download: $URL\n"
