@@ -5,6 +5,10 @@ This bash script generates a WARP Connector tunnel for WireGuard.
 2. Select: **`debian`**
 3. Insert the command:
 ```bash
-bash <(wget -qO- https://raw.githubusercontent.com/MetalistPavlenko/warp-connector.sh/main/warp-connector.sh)
+wget -O /tmp/warp-connector.sh https://raw.githubusercontent.com/MetalistPavlenko/warp-connector.sh/main/warp-connector.sh
 ```
-4. After the config is generated, download the file from the link and import it into WireGuard.
+4. Insert the command:
+```bash
+bash /tmp/warp-connector.sh <token>
+```
+5. After the config is generated, download the file from the link and import it into WireGuard.

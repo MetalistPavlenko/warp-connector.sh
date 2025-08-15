@@ -1,7 +1,8 @@
 #!/bin/bash
 
-echo "\nGenerating...\n"
+echo -e "\nGenerating...\n"
 
+{
 curl -sSL https://pkg.cloudflareclient.com/pubkey.gpg \
   | gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg \
   && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" \
@@ -35,5 +36,7 @@ screen -dmS python sh -c 'python3 -m http.server 80 --directory /tmp/wg0'
 screen -dmS bore sh -c 'bore local 80 --to bore.pub 2>&1 | tee /tmp/bore.log'
 
 ADDRESS=$(grep -oP "listening at \K[a-zA-Z0-9.-]+:[0-9]+" /tmp/bore.log | head -n 1)
+URL="http://$(dig +short "${ADDRESS%:*}")":${ADDRESS##*:}/wg0.conf
+} > /dev/null 2>&1
 
-echo "http://$(dig +short "${ADDRESS%:*}")":${ADDRESS##*:}/wg0.conf
+echo "$URL"
